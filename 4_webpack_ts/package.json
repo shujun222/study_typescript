@@ -1,0 +1,14 @@
+{
+  "name": "4_webpack_ts",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "shujun",
+  "license": "MIT",
+  "devDependencies": {
+    "ts-loader": "^9.2.2",
+    "typescript": "^4.3.2",
+    "webpack": "^5.38.1",
+    "webpack-cli": "^4.7.0"
+  },
+  "dependencies": {}
+}

@@ -1,0 +1,58 @@
+@bg-color: #b7d4a8;
+
+#main {
+    width: 360px;
+    height: 420px;
+    margin: 100px auto;
+    background-color: @bg-color;
+    border: 10px solid #000;
+    border-radius: 25px;
+
+    //开启弹性盒模型
+    display: flex;
+    // 设置主轴方向
+    flex-flow: column;
+    // 设置侧轴对齐方式
+    align-items: center;
+    // 设置主轴对齐方式
+    justify-content: space-around;
+
+    #stage{
+        width: 304px;
+        height: 304px;
+        border: 2px solid black;
+        position: relative;
+    
+        #snake {
+            &>div{
+                width: 10px;
+                height: 10px;
+                background-color: black;
+                border: 1px solid @bg-color;
+                position: absolute;
+                // left: 20px;
+                // top: 50px;
+            }
+        }
+    
+        &>#food {
+            width: 10px;
+            height: 10px;
+            background-color: blue;
+            border: 1px solid @bg-color;
+            position: absolute;
+            
+            left: 40px;
+            top: 100px;
+        }
+    }
+
+    #socre-panel {
+        // border: 1px solid red;
+        width: 300px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+}
+

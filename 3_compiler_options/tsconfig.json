@@ -1,0 +1,35 @@
+{
+    /**
+       神奇了，这个json文件竟然可以写注释，666
+       而且整个json非常好写，自动提示补全
+    **/
+
+
+    // **/*  **任意目录，*任意文件
+    "include": [
+        // "**/app.ts"
+        "**/*"
+    ],
+
+    "exclude": [
+
+    ],
+
+
+    "compilerOptions": {
+        // 编译后的语法使用哪个版本，默认是es3
+        "target": "es3",
+        // 这个选项太难用了吧？ 如果开启allowJs，checkJs； 一直在递归创建目录dist
+        //
+        "outDir": "./dist",
+
+        
+        // 是否编译js文件
+        // "allowJs": true,
+        // 是否把js文件当作ts来检查，默认false
+        // "checkJs": true,
+
+        
+    }
+
+}
