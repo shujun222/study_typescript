@@ -6,8 +6,13 @@ export default class GameController {
     food: Food
     snake: Snake
     scorePannel: ScorePannel
+
+    // 蛇当前前进方向
     direction = "ArrowRight"
-    interval: unknown  //: NodeJS.Timeout  // 这是什么古怪类型
+    // 蛇多久走一步呢？游戏级别越高，蛇儿走的越快
+    interval: NodeJS.Timeout  // NodeJS.Timeout  // 这是什么古怪类型
+    // 蛇不能反方向走
+    reverseDirection = {"ArrowRight":"ArrowLeft", "ArrowLeft":"ArrowRight", "ArrowDown":"ArrowUp", "ArrowUp":"ArrowDown", }
 
     constructor() {
         this.food = new Food()
@@ -18,17 +23,27 @@ export default class GameController {
     }
 
     init() {
+        // 监听方向控制
         document.addEventListener("keydown", (event) => {
-            // ArrowRight ArrowLeft ArrowDown ArrowUp
-            this.direction = event.key
-            this.snakeRun()
+            if (['ArrowRight', 'ArrowLeft', 'ArrowDown', 'ArrowUp'].indexOf(event.key) > -1) {
+                // 不让你掉头
+                if (this.reverseDirection[this.direction] === event.key) {
+                    return
+                }
+                
+                // 方向合法，你走一步&吃啊
+                this.direction = event.key
+                this.runAndEatFood()
+            }
         })
 
-        this.interval = setInterval(this.snakeRun.bind(this), 500)
+        // 初始蛇的定时器
+        this.interval = setInterval(this.runAndEatFood.bind(this), 330-this.scorePannel.level*30)
     }
 
      
-    snakeRun() { 
+    runAndEatFood() { 
+        // 小蛇蛇往前迈一步 this.snake.setX改变位置，同时有撞墙检测 & 咬自己检测
         try {
             switch (this.direction) {
                 case "ArrowRight":
@@ -49,7 +64,21 @@ export default class GameController {
         } catch (e) {
             alert("Game Over: " + e.message)
             clearInterval(this.interval)
+            return
         }
-        
+
+        //检测是否吃到了事物
+        if (this.snake.X===this.food.X && this.snake.Y===this.food.Y) {
+            this.food.changePosition()
+            this.snake.addBody()
+
+            // 是否升一级啦？
+            let isNewLevel = this.scorePannel.addScore()
+            // 升级后重新设置定时器，加快速度
+            if (isNewLevel) {
+                clearInterval(this.interval)
+                this.interval = setInterval(this.runAndEatFood.bind(this), 330-this.scorePannel.level*30)
+            }
+        }
     }
 }
