@@ -1,3 +1,5 @@
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+
 module.exports = {
     entry: './src/index.ts',
 
@@ -16,5 +18,11 @@ module.exports = {
     // import能够引入哪些模块呢？
     resolve: {
         extensions: ['.ts', '.js']
-    }
+    },
+
+    plugins: [
+        new HtmlWebpackPlugin({
+            template: 'src/index.html'
+        })
+    ],
 }
